@@ -166,12 +166,12 @@ class UnusedPrivateClassSpec {
         @Test
         fun `should not report them if used as generic type in functions`() {
             val code = """
-                private class Foo
-                private var a = bar<Foo>()
-                
                 fun <T> bar(): T {
                     throw Exception()
                 }
+
+                private class Foo
+                private var a = bar<Foo>()
             """.trimIndent()
 
             val findings = subject.compileAndLint(code)

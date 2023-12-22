@@ -27,8 +27,8 @@ class PreferToOverPairSyntaxSpec(val env: KotlinCoreEnvironment) {
     @Test
     fun `reports if pair is created using a function that uses pair constructor`() {
         val code = """
-            val pair = createPair()
             fun createPair() = Pair(1, 2)
+            val pair = createPair()
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
         assertThat(findings).hasSize(1)
@@ -56,8 +56,8 @@ class PreferToOverPairSyntaxSpec(val env: KotlinCoreEnvironment) {
     @Test
     fun `does not report if pair is created using a function that uses the to syntax`() {
         val code = """
-            val pair = createPair()
             fun createPair() = 1 to 2
+            val pair = createPair()
         """.trimIndent()
         assertThat(subject.compileAndLintWithContext(env, code)).isEmpty()
     }

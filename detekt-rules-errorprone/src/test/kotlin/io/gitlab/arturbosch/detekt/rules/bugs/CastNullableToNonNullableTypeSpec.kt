@@ -31,17 +31,17 @@ class CastNullableToNonNullableTypeSpec(private val env: KotlinCoreEnvironment) 
     @Test
     fun `reports casting Nullable value returned from a function call to NonNullable type`() {
         val code = """
-            fun foo(bar: Any?) {
-                bar() as Int
-            }
-            
             fun bar(): Int? {
                 return null
+            }
+
+            fun foo(bar: Any?) {
+                bar() as Int
             }
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
         assertThat(findings).hasSize(1)
-        assertThat(findings).hasStartSourceLocation(2, 11)
+        assertThat(findings).hasStartSourceLocation(6, 11)
         assertThat(findings[0]).hasMessage(
             "Use separate `null` assertion and type cast like " +
                 "('(bar() ?: error(\"null assertion message\")) as Int') instead of 'bar() as Int'."

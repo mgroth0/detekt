@@ -948,17 +948,17 @@ class MagicNumberSpec {
 
         @Test
         fun `should report 3`() {
-            assertThat(rule.compileAndLint("""fun bar() { foo(3) }; fun foo(n: Int) {}""")).hasSize(1)
+            assertThat(rule.compileAndLint("""fun foo(n: Int) {}; fun bar() { foo(3) }""")).hasSize(1)
         }
 
         @Test
         fun `should not report named 3`() {
-            assertThat(rule.compileAndLint("""fun bar() { foo(param=3) }; fun foo(param: Int) {}""")).isEmpty()
+            assertThat(rule.compileAndLint("""fun foo(param: Int) {}; fun bar() { foo(param=3) }""")).isEmpty()
         }
 
         @Test
         fun `should not report 3 due to scoped describing variable`() {
-            assertThat(rule.compileAndLint("""fun bar() { val a = 3; foo(a) }; fun foo(n: Int) {}""")).isEmpty()
+            assertThat(rule.compileAndLint("""fun foo(n: Int) {}; fun bar() { val a = 3; foo(a) }""")).isEmpty()
         }
     }
 
