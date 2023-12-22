@@ -319,12 +319,12 @@ class UnusedParameterSpec(val env: KotlinCoreEnvironment) {
         @Test
         fun `unused parameter`() {
             val code = """
-                fun foo(modifier: Int) {
-                    bar(modifier = 1)
-                }
-                
                 fun bar(modifier: Int) {
                     println(modifier)
+                }
+
+                fun foo(modifier: Int) {
+                    bar(modifier = 1)
                 }
             """.trimIndent()
             assertThat(subject.compileAndLintWithContext(env, code)).hasSize(1).hasStartSourceLocation(5, 9)
@@ -333,12 +333,11 @@ class UnusedParameterSpec(val env: KotlinCoreEnvironment) {
         @Test
         fun `used parameter`() {
             val code = """
-                fun foo(modifier: Int) {
-                    bar(modifier = modifier)
-                }
-                
                 fun bar(modifier: Int) {
                     println(modifier)
+                }
+                fun foo(modifier: Int) {
+                    bar(modifier = modifier)
                 }
             """.trimIndent()
             assertThat(subject.compileAndLintWithContext(env, code)).isEmpty()

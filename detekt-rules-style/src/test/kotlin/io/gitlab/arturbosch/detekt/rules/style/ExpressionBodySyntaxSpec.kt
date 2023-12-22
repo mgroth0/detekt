@@ -105,11 +105,11 @@ class ExpressionBodySyntaxSpec {
             assertThat(
                 subject.compileAndLint(
                     """
+                        fun callee(a: String): String = ""
+
                         fun caller(): String {
                             return callee("" as String? ?: return "")
                         }
-                        
-                        fun callee(a: String): String = ""
                     """.trimIndent()
                 )
             ).isEmpty()

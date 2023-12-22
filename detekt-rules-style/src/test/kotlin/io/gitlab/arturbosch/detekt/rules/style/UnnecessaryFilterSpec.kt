@@ -244,13 +244,13 @@ class UnnecessaryFilterSpec(val env: KotlinCoreEnvironment) {
         @Test
         fun `Filter with assignment and count`() {
             val code = """
+                fun foo(list: List<Int>) {}
                 fun test(list: List<Int>): Int {
                     val x = list.map { it + 1 }.filter { it > 2 }
                     foo(x)
                     val count = x.count()
                     return count + 3
                 }
-                fun foo(list: List<Int>) {}
             """.trimIndent()
 
             val findings = subject.compileAndLintWithContext(env, code)

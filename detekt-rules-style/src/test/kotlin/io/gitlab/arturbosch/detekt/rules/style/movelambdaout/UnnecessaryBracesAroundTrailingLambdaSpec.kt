@@ -52,12 +52,12 @@ class UnnecessaryBracesAroundTrailingLambdaSpec(val env: KotlinCoreEnvironment) 
     @Test
     fun `does not report when trailing lambda is used without braces`() {
         val code = """
-            fun foo() {
-                bar() { it }
-            }
-
             fun bar(b: (Int) -> Int) {
                 b(1)
+            }
+
+            fun foo() {
+                bar() { it }
             }
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
@@ -67,11 +67,11 @@ class UnnecessaryBracesAroundTrailingLambdaSpec(val env: KotlinCoreEnvironment) 
     @Test
     fun `does not report when first and second lambda is present`() {
         val code = """
+            fun bar(p1: (Int) -> Int, p2: (Int) -> Int) {}
+
             fun foo() {
                 bar({ it }) { it }
             }
-
-            fun bar(p1: (Int) -> Int, p2: (Int) -> Int) {}
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
         assertThat(findings).isEmpty()
@@ -112,11 +112,11 @@ class UnnecessaryBracesAroundTrailingLambdaSpec(val env: KotlinCoreEnvironment) 
     @Test
     fun `does not report first lambda can not be moved out of the braces`() {
         val code = """
+            fun bar(b: (Int) -> Int, option: Int = 0) {}
+
             fun foo() {
                 bar({ it })
             }
-
-            fun bar(b: (Int) -> Int, option: Int = 0) {}
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
         assertThat(findings).isEmpty()
@@ -125,12 +125,12 @@ class UnnecessaryBracesAroundTrailingLambdaSpec(val env: KotlinCoreEnvironment) 
     @Test
     fun `does report second lambda with label can not be moved out of the braces`() {
         val code = """
-            fun foo() {
-                bar(2, l@{ it })
-            }
-
             fun bar(a: Int, b: (Int) -> Int) {
                 b(a)
+            }
+
+            fun foo() {
+                bar(2, l@{ it })
             }
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
@@ -140,15 +140,15 @@ class UnnecessaryBracesAroundTrailingLambdaSpec(val env: KotlinCoreEnvironment) 
     @Test
     fun `does report lambda with multiline expression can not be moved out of the braces`() {
         val code = """
+            fun bar(a: Int, b: (Int) -> Int) {
+                b(a)
+            }
+
             fun foo() {
                 bar(2, {
                     val x = 3
                     it * x
                 })
-            }
-
-            fun bar(a: Int, b: (Int) -> Int) {
-                b(a)
             }
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
@@ -158,12 +158,12 @@ class UnnecessaryBracesAroundTrailingLambdaSpec(val env: KotlinCoreEnvironment) 
     @Test
     fun `does not report lambda with label which can be moved out of the braces`() {
         val code = """
-            fun foo() {
-                bar(name1 = 3, name2 = 2, name3 = 1, name4 = { it })
-            }
-
             fun bar(name1: Int, name2: Int, name3: Int, name4: (Int) -> Int): Int {
                 return name4(name1) + name2 + name3
+            }
+
+            fun foo() {
+                bar(name1 = 3, name2 = 2, name3 = 1, name4 = { it })
             }
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
@@ -173,12 +173,12 @@ class UnnecessaryBracesAroundTrailingLambdaSpec(val env: KotlinCoreEnvironment) 
     @Test
     fun `does report when lambda returned from fun can have trailing lambda`() {
         val code = """
-            fun bar() {
-                foo { "one" } ({ "two" })
-            }
-
             fun foo(a: () -> String): (() -> String) -> Unit {
                 return { }
+            }
+
+            fun bar() {
+                foo { "one" } ({ "two" })
             }
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
@@ -218,15 +218,15 @@ class UnnecessaryBracesAroundTrailingLambdaSpec(val env: KotlinCoreEnvironment) 
     @Test
     fun `does not report lambda has nested labels`() {
         val code = """
-            fun test() {
-                foo(bar@ foo@{ bar(it) })
-            }
+            fun bar(s: String) = s.length
 
             fun foo(f: (String) -> Int) {
                 f("")
             }
 
-            fun bar(s: String) = s.length
+            fun test() {
+                foo(bar@ foo@{ bar(it) })
+            }
         """.trimIndent()
         val findings = subject.compileAndLintWithContext(env, code)
         assertThat(findings).isEmpty()

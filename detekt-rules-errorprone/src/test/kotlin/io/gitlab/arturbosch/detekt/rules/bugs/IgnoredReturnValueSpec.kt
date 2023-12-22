@@ -712,6 +712,19 @@ class IgnoredReturnValueSpec {
         @Test
         fun `reports ignored return value in lambda of 'with' function`() {
             val code = """
+                class Insert {
+                    fun execute(): Int = TODO()
+                }
+
+                fun foo(insert: Insert) {}
+
+                annotation class CheckResult
+
+                class Database {
+                    @CheckResult
+                    fun insert(query: String): Insert = TODO()
+                }
+
                 fun test(db: Database, sql: String) {
                     with(db) {
                         insert(sql) // Should be detected
@@ -725,19 +738,6 @@ class IgnoredReturnValueSpec {
                     with(db) { insert(sql) }.execute()
                     val x = with(db) { insert(sql) }
                 }
-                
-                annotation class CheckResult
-                
-                class Database {
-                    @CheckResult
-                    fun insert(query: String): Insert = TODO()
-                }
-                
-                class Insert {
-                    fun execute(): Int = TODO()
-                }
-
-                fun foo(insert: Insert) {}
             """.trimIndent()
             val findings = subject.compileAndLintWithContext(env, code)
             assertThat(findings).hasSize(2)
@@ -900,11 +900,11 @@ class IgnoredReturnValueSpec {
         @Test
         fun `reports when a single function inside main is not annotated - #5806`() {
             val code = """
+                fun ignoredReturn(): String = "asd"
+                
                 fun main() {
                     ignoredReturn()
                 }
-                
-                fun ignoredReturn(): String = "asd"
             """.trimIndent()
             val findings = subject.compileAndLintWithContext(env, code)
             assertThat(findings).hasSize(1)

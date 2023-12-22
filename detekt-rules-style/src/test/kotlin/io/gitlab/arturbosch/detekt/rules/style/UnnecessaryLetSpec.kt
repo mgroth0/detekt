@@ -458,13 +458,13 @@ class UnnecessaryLetSpec(val env: KotlinCoreEnvironment) {
         val findings = subject.compileAndLintWithContext(
             env,
             """
+                fun List<String>.toInt(): List<Int> = mapNotNull { it.toIntOrNull() }
+
                 fun test(list: List<String?>) {
                     list
                         .filterNotNull()
                         .let { it.toInt() }
                 }
-                
-                fun List<String>.toInt(): List<Int> = mapNotNull { it.toIntOrNull() }
             """.trimIndent()
         )
         assertThat(findings).hasSize(1)

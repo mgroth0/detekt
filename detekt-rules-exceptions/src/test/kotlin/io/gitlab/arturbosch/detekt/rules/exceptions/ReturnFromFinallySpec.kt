@@ -161,6 +161,8 @@ class ReturnFromFinallySpec(val env: KotlinCoreEnvironment) {
         @Test
         fun `should report`() {
             val code = """
+                fun compute(): String = "value"
+
                 fun expression() = try {
                     "try"
                 } catch (e: Exception) {
@@ -168,8 +170,6 @@ class ReturnFromFinallySpec(val env: KotlinCoreEnvironment) {
                 } finally {
                     compute()
                 }
-                
-                fun compute(): String = "value"
             """.trimIndent()
 
             val finding = subject.compileAndLintWithContext(env, code)
