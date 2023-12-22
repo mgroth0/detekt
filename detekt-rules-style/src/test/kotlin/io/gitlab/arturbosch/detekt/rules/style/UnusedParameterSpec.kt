@@ -344,7 +344,7 @@ class UnusedParameterSpec(val env: KotlinCoreEnvironment) {
                     println(modifier)
                 }
             """.trimIndent()
-            assertThat(subject.compileAndLintWithContext(env, code)).hasSize(1).hasStartSourceLocation(1, 9)
+            assertThat(subject.compileAndLintWithContext(env, code)).hasSize(1).hasStartSourceLocation(5, 9)
         }
 
         @Test

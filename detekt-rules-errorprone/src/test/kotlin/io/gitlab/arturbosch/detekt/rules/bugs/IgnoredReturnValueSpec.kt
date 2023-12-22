@@ -908,7 +908,7 @@ class IgnoredReturnValueSpec {
             """.trimIndent()
             val findings = subject.compileAndLintWithContext(env, code)
             assertThat(findings).hasSize(1)
-            assertThat(findings).hasStartSourceLocation(2, 5)
+            assertThat(findings).hasStartSourceLocation(4, 5)
             assertThat(findings[0]).hasMessage("The call ignoredReturn is returning a value that is ignored.")
         }
 
