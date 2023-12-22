@@ -5,6 +5,11 @@ rootProject.name = "detekt"
 pluginManagement {
     includeBuild("build-logic")
     includeBuild("detekt-gradle-plugin")
+
+    repositories {
+        gradlePluginPortal()
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
+    }
 }
 
 include("code-coverage-report")
@@ -95,5 +100,6 @@ buildCache {
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
     }
 }

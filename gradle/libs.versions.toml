@@ -4,7 +4,7 @@ jacoco = "0.8.11"
 kotlin = "2.0.0-Beta3"
 ktlint = "1.1.1"
 junit = "5.10.1"
-poko = "0.15.2"
+poko = "0.16.0-SNAPSHOT"
 slf4j = "2.0.11"
 
 [libraries]
