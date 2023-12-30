@@ -108,7 +108,7 @@ class ForbiddenComment(config: Config) : Rule(
     }
 
     @Configuration("ignores comments which match the specified regular expression. For example `Ticket|Task`.")
-    private val allowedPatterns: Regex by config("", String::toRegex)
+    private val allowedPatterns: Regex by config("") { it.toRegex() }
 
     @Configuration("error message which overrides the default one")
     @Deprecated("Use `comments` and provide `reason` against each `value`.")

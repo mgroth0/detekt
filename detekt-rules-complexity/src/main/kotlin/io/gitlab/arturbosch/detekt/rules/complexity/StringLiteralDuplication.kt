@@ -54,7 +54,7 @@ class StringLiteralDuplication(config: Config) : Rule(
     private val allowedWithLengthLessThan: Int by config(5)
 
     @Configuration("RegEx of Strings that should be ignored")
-    private val ignoreStringsRegex: Regex by config("$^", String::toRegex)
+    private val ignoreStringsRegex: Regex by config("$^") { it.toRegex() }
 
     override fun visitKtFile(file: KtFile) {
         val visitor = StringLiteralVisitor()

@@ -33,7 +33,7 @@ class ForbiddenImport(config: Config) : Rule(
     }
 
     @Configuration("reports imports which match the specified regular expression. For example `net.*R`.")
-    private val forbiddenPatterns: Regex by config("", String::toRegex)
+    private val forbiddenPatterns: Regex by config("") { it.toRegex() }
 
     override fun visitImportDirective(importDirective: KtImportDirective) {
         super.visitImportDirective(importDirective)

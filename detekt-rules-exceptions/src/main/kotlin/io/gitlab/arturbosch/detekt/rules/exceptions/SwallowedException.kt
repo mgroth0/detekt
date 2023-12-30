@@ -77,7 +77,7 @@ class SwallowedException(config: Config) : Rule(
     }
 
     @Configuration("ignores too generic exception types which match this regex")
-    private val allowedExceptionNameRegex: Regex by config("_|(ignore|expected).*", String::toRegex)
+    private val allowedExceptionNameRegex: Regex by config("_|(ignore|expected).*") { it.toRegex() }
 
     override fun visitCatchSection(catchClause: KtCatchClause) {
         catchClause.catchParameter?.let { catchParameter ->

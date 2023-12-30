@@ -24,10 +24,10 @@ class FunctionParameterNaming(config: Config) : Rule(
 ) {
 
     @Configuration("naming pattern")
-    private val parameterPattern: Regex by config("[a-z][A-Za-z0-9]*", String::toRegex)
+    private val parameterPattern: Regex by config("[a-z][A-Za-z0-9]*") { it.toRegex() }
 
     @Configuration("ignores variables in classes which match this regex")
-    private val excludeClassPattern: Regex by config("$^", String::toRegex)
+    private val excludeClassPattern: Regex by config("$^") { it.toRegex() }
 
     @Configuration("ignores overridden functions with parameters not matching the pattern")
     @Deprecated("Use `ignoreOverridden` instead")

@@ -43,7 +43,7 @@ class TooGenericExceptionCaught(config: Config) : Rule(
     private val exceptionNames: Set<String> by config(caughtExceptionDefaults) { it.toSet() }
 
     @Configuration("ignores too generic exception types which match this regex")
-    private val allowedExceptionNameRegex: Regex by config("_|(ignore|expected).*", String::toRegex)
+    private val allowedExceptionNameRegex: Regex by config("_|(ignore|expected).*") { it.toRegex() }
 
     override fun visitCatchSection(catchClause: KtCatchClause) {
         catchClause.catchParameter?.let { catchParameter ->

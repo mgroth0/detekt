@@ -26,10 +26,10 @@ class FunctionNaming(config: Config) : Rule(
     override val defaultRuleIdAliases: Set<String> = setOf("FunctionName")
 
     @Configuration("naming pattern")
-    private val functionPattern: Regex by config("[a-z][a-zA-Z0-9]*", String::toRegex)
+    private val functionPattern: Regex by config("[a-z][a-zA-Z0-9]*") { it.toRegex() }
 
     @Configuration("ignores functions in classes which match this regex")
-    private val excludeClassPattern: Regex by config("$^", String::toRegex)
+    private val excludeClassPattern: Regex by config("$^") { it.toRegex() }
 
     @Configuration("ignores functions that have the override modifier")
     @Deprecated("This configuration is ignored and will be removed in the future")

@@ -34,7 +34,7 @@ class BooleanPropertyNaming(config: Config) : Rule(
 ) {
 
     @Configuration("naming pattern")
-    private val allowedPattern: Regex by config("^(is|has|are)", String::toRegex)
+    private val allowedPattern: Regex by config("^(is|has|are)") { it.toRegex() }
 
     @Configuration("ignores properties that have the override modifier")
     @Deprecated("This configuration is ignored and will be removed in the future")

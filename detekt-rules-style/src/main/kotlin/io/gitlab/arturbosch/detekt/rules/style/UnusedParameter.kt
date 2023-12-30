@@ -52,7 +52,7 @@ class UnusedParameter(config: Config) : Rule(
         setOf("UNUSED_VARIABLE", "UNUSED_PARAMETER", "unused", "UnusedPrivateMember")
 
     @Configuration("unused parameter names matching this regex are ignored")
-    private val allowedNames: Regex by config("ignored|expected", String::toRegex)
+    private val allowedNames: Regex by config("ignored|expected") { it.toRegex() }
 
     override fun visit(root: KtFile) {
         super.visit(root)

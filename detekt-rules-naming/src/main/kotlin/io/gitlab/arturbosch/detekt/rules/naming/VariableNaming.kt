@@ -26,13 +26,13 @@ class VariableNaming(config: Config) : Rule(
 ) {
 
     @Configuration("naming pattern")
-    private val variablePattern: Regex by config("[a-z][A-Za-z0-9]*", String::toRegex)
+    private val variablePattern: Regex by config("[a-z][A-Za-z0-9]*") { it.toRegex() }
 
     @Configuration("naming pattern")
-    private val privateVariablePattern: Regex by config("(_)?[a-z][A-Za-z0-9]*", String::toRegex)
+    private val privateVariablePattern: Regex by config("(_)?[a-z][A-Za-z0-9]*") { it.toRegex() }
 
     @Configuration("ignores variables in classes which match this regex")
-    private val excludeClassPattern: Regex by config("$^", String::toRegex)
+    private val excludeClassPattern: Regex by config("$^") { it.toRegex() }
 
     @Configuration("ignores member properties that have the override modifier")
     @Deprecated("This configuration is ignored and will be removed in the future")

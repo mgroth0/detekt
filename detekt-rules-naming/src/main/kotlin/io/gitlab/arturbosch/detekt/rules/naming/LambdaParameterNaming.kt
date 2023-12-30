@@ -19,7 +19,7 @@ class LambdaParameterNaming(config: Config) : Rule(
 ) {
 
     @Configuration("naming pattern")
-    private val parameterPattern: Regex by config("[a-z][A-Za-z0-9]*|_", String::toRegex)
+    private val parameterPattern: Regex by config("[a-z][A-Za-z0-9]*|_") { it.toRegex() }
 
     override fun visitLambdaExpression(lambdaExpression: KtLambdaExpression) {
         super.visitLambdaExpression(lambdaExpression)

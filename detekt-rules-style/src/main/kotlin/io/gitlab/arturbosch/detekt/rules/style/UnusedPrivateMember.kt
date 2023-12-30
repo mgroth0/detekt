@@ -54,7 +54,7 @@ class UnusedPrivateMember(config: Config) : Rule(
     override val defaultRuleIdAliases: Set<String> = setOf("UNUSED_VARIABLE", "UNUSED_PARAMETER", "unused")
 
     @Configuration("unused private function names matching this regex are ignored")
-    private val allowedNames: Regex by config("", String::toRegex)
+    private val allowedNames: Regex by config("") { it.toRegex() }
 
     override fun visit(root: KtFile) {
         super.visit(root)
