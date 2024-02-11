@@ -22,6 +22,10 @@ publishing {
                 password = "SONATYPE_PASSWORD".byProperty
             }
         }
+        mavenLocal {
+            name = "controlledMavenLocal"
+            url = uri(File("/Users/matthewgroth/registered/maven/controlled"))
+        }
     }
     // We don't need to configure publishing for the Gradle plugin.
     if (project.name != "detekt-gradle-plugin") {
