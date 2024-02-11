@@ -13,6 +13,8 @@ nexusPublishing {
             username = providers.environmentVariable("ORG_GRADLE_PROJECT_SONATYPE_USERNAME")
             password = providers.environmentVariable("ORG_GRADLE_PROJECT_SONATYPE_PASSWORD")
         }
+
+
     }
 }
 
@@ -116,6 +118,16 @@ tasks.register("publishToMavenLocal") {
         }
     }
     dependsOn(gradle.includedBuild("detekt-gradle-plugin").task(":publishToMavenLocal"))
+}
+
+tasks.register("publishToControlledMavenLocal") {
+    description = "Publish all the projects to Controlled Maven Local"
+    subprojects {
+        if (this.plugins.hasPlugin("packaging")) {
+            dependsOn(tasks.named("publishAllPublicationsToControlledMavenLocalRepository"))
+        }
+    }
+    dependsOn(gradle.includedBuild("detekt-gradle-plugin").task(":publishAllPublicationsToControlledMavenLocalRepository"))
 }
 
 tasks.register("publishAllToSonatypeSnapshot") {
