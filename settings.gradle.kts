@@ -42,6 +42,7 @@ include("detekt-rules-style")
 include("detekt-sample-extensions")
 include("detekt-test")
 include("detekt-test-utils")
+include("detekt-test-compose")
 include("detekt-tooling")
 include("detekt-utils")
 
