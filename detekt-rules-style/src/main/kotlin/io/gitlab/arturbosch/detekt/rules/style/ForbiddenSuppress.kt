@@ -76,11 +76,7 @@ class ForbiddenSuppress(config: Config) : Rule(
         val text = argument.findDescendantOfType<KtLiteralStringTemplateEntry>()?.text
         if (text == "ForbiddenSuppress") {
             null
-        } else if (rules.contains(text)) {
-            text
-        } else {
-            null
-        }
+        } else if (rules.contains(text)) text else null
     }
 
     private companion object {
